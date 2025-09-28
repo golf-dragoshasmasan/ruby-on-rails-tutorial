@@ -6,6 +6,11 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  # Preferences
+  has_one :preference, class_name: "UserPreference", foreign_key: "user_id", dependent: :destroy
+  accepts_nested_attributes_for :preference
+  after_create :create_default_user_preference
+
   before_save { email.downcase! }
   validates(:name, presence: true, length: { maximum: 50 })
   validates(:email, presence: true, length: { maximum: 255 },
@@ -41,4 +46,16 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+  def update_or_create_preference!(attrs)
+    if preference
+      preference.update!(attrs)
+    else
+      create_preference!(attrs)
+    end
+  end
+
+  private
+  def create_default_user_preference
+    UserPreference.create_for_user!(self)
+  end
 end
