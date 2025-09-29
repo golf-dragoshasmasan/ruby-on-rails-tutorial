@@ -1,5 +1,6 @@
 class UserPreferencesController < ApplicationController
-  before_action :set_user
+  before_action :correct_user
+
 
   # GET /users/:user_id/preferences
   def show
@@ -20,12 +21,14 @@ class UserPreferencesController < ApplicationController
   end
 
   private
-  def set_user()
+  # Confirms the correct user.
+  def correct_user
     @user = User.find(params[:user_id])
+    redirect_to(root_url) unless current_user?(@user)
   end
 
   def preference_params
     # Explicitly whitelist only pagination for now
-    params.require(:preference).permit(:pagination)
+    params.require(:user_preference).permit(:pagination)
   end
 end

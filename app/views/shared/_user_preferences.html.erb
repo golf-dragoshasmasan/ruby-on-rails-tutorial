@@ -1,0 +1,29 @@
+<% @user ||= current_user %>
+<%= form_with(
+    model: @user.preference,
+    url: "/users/#{@user.id}/preferences",
+    method: :patch,
+    local: false,
+    html: { id: "preferences-form" }
+  ) do |form| %>
+  <div class="field">
+    <%= form.label :pagination, "Pagination size" %>
+    <%= form.select :pagination,
+          UserPreference::PAGINATION_OPTIONS.map { |v| [v, v] }, # 2 params => (label, value)
+          { selected: @user.preference&.pagination || UserPreference::PAGINATION_DEFAULT },
+          { class: "form-control" } %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Save Preferences" %>
+  </div>
+<% end %>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("preferences-form");
+    if (form) {
+      form.addEventListener("ajax:success", function() {
+        window.location.reload();
+      });
+    }
+  });
+</script>
