@@ -1,7 +1,6 @@
 class UserPreferencesController < ApplicationController
   before_action :correct_user
 
-
   # GET /users/:user_id/preferences
   def show
     if @user.preference
@@ -21,6 +20,7 @@ class UserPreferencesController < ApplicationController
   end
 
   private
+
   # Confirms the correct user.
   def correct_user
     @user = User.find(params[:user_id])

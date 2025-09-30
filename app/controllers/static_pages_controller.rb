@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   def home
     if logged_in?
       @micropost = current_user.microposts.build
-      @feed_items = current_user.feed.paginate(page: params[:page], per_page: current_pagination) # Without typing, this becomes a nightmare to follow
+      @feed_items = paginate_custom(current_user.feed, params)
     end
   end
 

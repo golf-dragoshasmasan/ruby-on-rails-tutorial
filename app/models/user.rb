@@ -55,6 +55,7 @@ class User < ApplicationRecord
   end
 
   private
+
   def create_default_user_preference
     UserPreference.create_for_user!(self)
   end

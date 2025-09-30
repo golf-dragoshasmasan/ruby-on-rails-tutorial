@@ -5,12 +5,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # Antipattern? Shouldn't this be handled by some microposts helper class?
-    @microposts = @user.microposts.paginate(page: params[:page], per_page: current_pagination)
+    @microposts = paginate_custom(@user.microposts, params)
   end
 
   def index
-    @users = User.paginate(page: params[:page], per_page: current_pagination)
+    @users = paginate_custom(User, params)
   end
 
   def new
@@ -51,18 +50,19 @@ class UsersController < ApplicationController
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page], per_page: current_pagination)
+    @users = paginate_custom(@user.following, params)
     render 'show_follow'
   end
 
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page], per_page: current_pagination)
+    @users = paginate_custom(@user.followers, params)
     render 'show_follow'
   end
 
   private
+
     # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
