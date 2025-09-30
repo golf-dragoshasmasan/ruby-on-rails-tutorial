@@ -22,15 +22,20 @@ gem 'bootsnap',                   '1.7.2', require: false
 
 group :development, :test do
   gem 'sqlite3', '1.6.8'
-  gem 'byebug',  '11.1.3', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug',  '11.1.3', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
-  gem 'web-console',        '4.1.0'
-  gem 'rack-mini-profiler', '2.3.1'
-  gem 'listen',             '3.4.1'
-  gem 'spring',             '2.1.1'
-  gem 'htmlbeautifier',     '1.4.3'
+  gem 'web-console',            '4.1.0'
+  gem 'rack-mini-profiler',     '2.3.1'
+  gem 'listen',                 '3.4.1'
+  gem 'spring',                 '2.1.1'
+  gem 'htmlbeautifier',         '1.4.3'
+  gem 'rubocop',                '1.81.1'
+  gem 'rubocop-rails',          '2.23.1'
+  gem 'rubocop-gitlab-security', '0.1.1'
+  gem 'rubocop-capybara',       '2.22.1'
+  gem 'rubocop-minitest',       '0.35.0'
 end
 
 group :test do
