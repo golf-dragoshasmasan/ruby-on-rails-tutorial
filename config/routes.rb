@@ -17,4 +17,7 @@ Rails.application.routes.draw do
   end
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  get   "/users/:user_id/preferences", to: "user_preferences#show",   as: "user_preferences"  # This is how routes should be declared. NO MAGIC
+  patch "/users/:user_id/preferences", to: "user_preferences#update"
+
 end

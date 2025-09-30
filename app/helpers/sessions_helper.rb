@@ -11,6 +11,15 @@ module SessionsHelper
     end
   end
 
+  # Returns the pagination of the current user. If no user is logged in, get the default pagination
+  def current_pagination
+    current_user&.preference&.pagination || UserPreference::PAGINATION_DEFAULT
+  end
+
+  def paginate_custom(entity, params)
+    entity.paginate(page: params[:page], per_page: current_pagination)
+  end
+
   # Returns true if the given user is the current user.
   def current_user?(user)
     user && user == current_user

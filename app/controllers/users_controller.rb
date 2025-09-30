@@ -5,11 +5,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = paginate_custom(@user.microposts, params)
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = paginate_custom(User, params)
   end
 
   def new
@@ -50,18 +50,19 @@ class UsersController < ApplicationController
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
+    @users = paginate_custom(@user.following, params)
     render 'show_follow'
   end
 
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
+    @users = paginate_custom(@user.followers, params)
     render 'show_follow'
   end
 
   private
+
     # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id])
